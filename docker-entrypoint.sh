@@ -29,7 +29,7 @@ chown www-data:www-data /var/run/apache2 /var/lock/apache2 /var/log/apache2
     if [ -f "${SQL_FILE}" ]; then
         echo "Importing database schema..."
         # FIX: Use --force so existing tables don't crash the import
-        mysql --force -h"${DB_HOST}" -P"${DB_PORT}" -u"${DB_USER}" -p"${DB_PASS}" "${DB_NAME}" < "${SQL_FILE}" 2>&1 | grep -v "Warning: Using a password"
+        mysql --force -h"${DB_HOST}" -P"${DB_PORT}" -u"${DB_USER}" -p"${DB_PASS}" < "${SQL_FILE}" 2>&1 | grep -v "Warning: Using a password"
         echo "Database import complete."
     fi
 ) &
