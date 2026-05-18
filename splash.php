@@ -94,16 +94,16 @@ $stats = [
 
 if ($db_status === 'connected') {
     $result = $conn->query("SELECT COUNT(*) as count FROM clients WHERE status='Active'");
-    $stats['total_clients'] = $result->fetch_assoc()['count'] ?? 0;
+    if ($result) $stats['total_clients'] = $result->fetch_assoc()['count'] ?? 0;
     
     $result = $conn->query("SELECT COUNT(*) as count FROM faults WHERE status IN ('Pending', 'Assigned', 'In Progress')");
-    $stats['active_faults'] = $result->fetch_assoc()['count'] ?? 0;
+    if ($result) $stats['active_faults'] = $result->fetch_assoc()['count'] ?? 0;
     
     $result = $conn->query("SELECT COUNT(*) as count FROM payments WHERE status = 'Pending'");
-    $stats['pending_payments'] = $result->fetch_assoc()['count'] ?? 0;
+    if ($result) $stats['pending_payments'] = $result->fetch_assoc()['count'] ?? 0;
     
     $result = $conn->query("SELECT COUNT(*) as count FROM employee WHERE status='Active' AND role='Technician'");
-    $stats['technicians_online'] = $result->fetch_assoc()['count'] ?? 0;
+    if ($result) $stats['technicians_online'] = $result->fetch_assoc()['count'] ?? 0;
 }
 
 $current_date = date('l, F j, Y');
