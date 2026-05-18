@@ -32,6 +32,9 @@ RUN echo '<VirtualHost *:80>\n\
     </Directory>\n\
 </VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
+# FIX: Disable Apache's ServerName warning and ensure it runs in foreground
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 RUN echo "upload_max_filesize = 20M\npost_max_size = 20M\nmax_execution_time = 120\nmemory_limit = 256M\ndisplay_errors = Off\nlog_errors = On" \
     > /etc/php/8.1/apache2/conf.d/99-custom.ini
 
@@ -46,8 +49,14 @@ RUN mkdir -p /var/www/html/uploads/faults \
     && chmod -R 775 /var/www/html/uploads /var/www/html/logs /var/www/html/backups
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# FIX: Ensure entrypoint has Unix line endings (LF not CRLF)
+RUN sed -i 's/\r//' /usr/local/bin/docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 80
+
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
+# FIX: Use apache2ctl correctly — pass -D FOREGROUND so it doesn't daemonize
+CMD ["apache2ctl", "-D", "FOREGROUND"]
