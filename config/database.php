@@ -39,6 +39,7 @@ if ($conn->connect_error) {
     die('Database connection failed: ' . $conn->connect_error);
 }
 $conn->set_charset('utf8mb4');
+$conn->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
 
 // Legacy aliases (some pages use $servername / $username / $password / $database)
 $servername = $db_host;
@@ -59,4 +60,5 @@ try {
 } catch (PDOException $e) {
     die('Database connection failed: ' . htmlspecialchars($e->getMessage()));
 }
+
 
