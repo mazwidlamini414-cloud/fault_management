@@ -31,6 +31,13 @@ RUN echo "upload_max_filesize = 20M\npost_max_size = 20M\nmax_execution_time = 1
 
 COPY . /var/www/html/
 
+# Remove Apache's default index.html so index.php takes over
+RUN rm -f /var/www/html/index.html
+
+# Make PHP the first DirectoryIndex so index.php loads before index.html
+RUN sed -i 's/DirectoryIndex .*/DirectoryIndex index.php index.html/' \
+    /etc/apache2/mods-enabled/dir.conf
+
 # Strip ALL Windows CRLF line endings from every text file in the image
 RUN find /var/www/html -type f \( \
         -name "*.php" -o -name "*.sh" -o -name "*.sql" \
