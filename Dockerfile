@@ -23,15 +23,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite php8.1 headers expires deflate
 
-RUN echo '<VirtualHost *:80>\n\
-    DocumentRoot /var/www/html\n\
-    <Directory /var/www/html>\n\
-        Options -Indexes +FollowSymLinks\n\
-        AllowOverride All\n\
-        Require all granted\n\
-    </Directory>\n\
-</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
-
 # Suppress Apache ServerName warning
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
@@ -60,6 +51,8 @@ COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN sed -i 's/\r//' /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 
+# Railway injects $PORT at runtime — do NOT hardcode EXPOSE 80
+# The entrypoint configures Apache to listen on $PORT dynamically
 EXPOSE 80
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
