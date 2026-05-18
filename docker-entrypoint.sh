@@ -7,6 +7,14 @@ DB_NAME="${MYSQLDATABASE:-${DB_NAME:-busiquip_final}}"
 SQL_FILE="/var/www/html/database.sql"
 FLAG_FILE="/var/www/html/.db_imported"
 
+# Configure Apache to listen on Railway's $PORT (default 80)
+APP_PORT="${PORT:-80}"
+sed -i "s/^Listen .*/Listen ${APP_PORT}/" /etc/apache2/ports.conf
+sed -i "s/<VirtualHost \*:.*>/<VirtualHost *:${APP_PORT}>/" /etc/apache2/sites-enabled/000-default.conf
+
+echo "Apache will listen on port ${APP_PORT}..."
+
+# Import DB in background so Apache starts immediately
 (
     echo "Waiting for MySQL at ${DB_HOST}:${DB_PORT} ..."
     RETRIES=30
