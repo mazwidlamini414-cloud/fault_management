@@ -257,3 +257,4 @@ function validateChecks() {
 </script>
 
 <?php require_once __DIR__ . '/../../includes/acc_footer.php'; ?>
+

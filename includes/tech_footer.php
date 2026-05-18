@@ -17,3 +17,4 @@ showToast(<?= json_encode($_SESSION['toast']['msg']) ?>, <?= json_encode($_SESSI
 </script>
 </body>
 </html>
+

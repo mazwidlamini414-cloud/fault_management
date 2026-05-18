@@ -128,3 +128,4 @@ $total_rows = mysqli_num_rows($faults);
 <?php endif; ?>
 
 <?php require_once '../../includes/tech_footer.php'; ?>
+

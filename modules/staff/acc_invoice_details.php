@@ -905,3 +905,4 @@ $fault_equip   = parseFaultField($fault_desc, 'EQUIPMENT TYPE');
 <?php endif; ?>
 
 <?php require_once '../../includes/acc_footer.php'; ?>
+

@@ -219,3 +219,4 @@ document.getElementById('log-form')?.addEventListener('submit', function(){
 </script>
 
 <?php require_once 'includes/tech_footer.php'; ?>
+

@@ -207,3 +207,4 @@ function printQuot(id){ window.open('quotation_history.php?view='+id+'&print=1',
 </script>
 
 <?php require_once 'includes/tech_footer.php'; ?>
+

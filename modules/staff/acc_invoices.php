@@ -109,3 +109,4 @@ function filterInvoices() {
 </script>
 
 <?php require_once '../../includes/acc_footer.php'; ?>
+

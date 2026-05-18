@@ -236,3 +236,4 @@ setInterval(()=>{ location.reload(); }, 15000);
 </script>
 
 <?php require_once 'includes/tech_footer.php'; ?>
+

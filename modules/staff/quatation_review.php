@@ -226,3 +226,4 @@ if ($_POST['action'] ?? null) {
 </div>
 
 <?php require_once '../../includes/acc_footer.php'; ?>
+

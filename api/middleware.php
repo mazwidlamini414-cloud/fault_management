@@ -84,3 +84,4 @@ function clean(string $val): string {
     return $conn->real_escape_string(trim($val));
 }
 
+

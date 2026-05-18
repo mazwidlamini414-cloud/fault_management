@@ -598,3 +598,4 @@ setInterval(loadFaults, 30000); // Auto-refresh every 30s
 </script>
 </body>
 </html>
+
