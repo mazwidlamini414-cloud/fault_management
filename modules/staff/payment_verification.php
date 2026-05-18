@@ -247,3 +247,4 @@ function payBadge($status) {
 <?php endif; ?>
 
 <?php require_once '../../includes/acc_footer.php'; ?>
+

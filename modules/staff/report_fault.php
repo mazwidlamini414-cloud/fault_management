@@ -2,7 +2,7 @@
 // ═══════════════════════════════════════════════════════════════════════
 //  report_fault.php  —  BUSIQUIP ESWATINI  —  Fault Reporting Form
 //  Database: busiquip_final
-//  Opens as a new page from client_portalfinal.php
+//  Opens as a new page FROM client_portalfinal.php
 //  Session keys (set by client_login.php):
 //    $_SESSION['client_id']      → client.CLIENT_ID
 //    $_SESSION['client_name']    → client.COMPANY_NAME
@@ -1641,3 +1641,4 @@ updateProgress();
 </script>
 </body>
 </html>
+

@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['submit_quotation']))
     exit;
 }
 
-// ── Resolve assign_id from fault if not given ────────────────────────────────
+// ── Resolve assign_id FROM fault if not given ────────────────────────────────
 if ($fault_id && !$assign_id) {
     $ar = mysqli_fetch_assoc(mysqli_query($conn, "
         SELECT a.ASSIGN_ID FROM assignment a

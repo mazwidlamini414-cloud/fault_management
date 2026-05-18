@@ -798,3 +798,4 @@ showToast('<?= addslashes($error_msg) ?>', 'error');
 </script>
 
 <?php require_once '../../includes/acc_footer.php'; ?>
+

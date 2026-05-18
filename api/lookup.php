@@ -66,3 +66,4 @@ if ($type === 'technicians') {
 
 if (!$type) api_error("'type' parameter is required. Options: fault_types, clients, employees, technicians");
 api_error("Unknown type '$type'");
+

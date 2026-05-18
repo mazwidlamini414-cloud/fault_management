@@ -189,3 +189,4 @@ if ($role === 'Admin') {
         'recent_faults'        => $recent,
     ]);
 }
+

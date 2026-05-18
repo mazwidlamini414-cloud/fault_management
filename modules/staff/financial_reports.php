@@ -185,7 +185,7 @@ $fault_financial = mysqli_query($conn, "
     WHERE rf.REPORT_DATE BETWEEN '$date_from' AND '$date_to'
     GROUP BY rf.STATUS ORDER BY fault_count DESC");
 
-// 9) VAT Report (14% VAT breakdown from invoice lines)
+// 9) VAT Report (14% VAT breakdown FROM invoice lines)
 $vat_report = mysqli_query($conn, "
     SELECT DATE_FORMAT(i.INVOICE_DATE,'%Y-%m') as month,
            DATE_FORMAT(i.INVOICE_DATE,'%b %Y') as month_label,
@@ -1220,3 +1220,4 @@ function setDatePreset(preset) {
 </div>
 
 <?php require_once '../../includes/acc_footer.php'; ?>
+

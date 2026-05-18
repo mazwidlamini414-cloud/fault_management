@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     error_log("Login attempt - Username: " . $username . ", Password: " . $password_input);
     
     // Query the database
-    $query = "SELECT * FROM ADMIN WHERE USERNAME = ?";
+    $query = "SELECT * FROM admin WHERE USERNAME = ?";
     $stmt = $conn->prepare($query);
     
     if(!$stmt) {

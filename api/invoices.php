@@ -158,3 +158,4 @@ if ($method === 'POST') {
 }
 
 api_error('Method not allowed', 405);
+

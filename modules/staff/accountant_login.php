@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $username = trim($_POST['username']);
     $password_input = trim($_POST['password']);
     
-    $query = "SELECT * FROM EMPLOYEE WHERE USERNAME = ? AND ROLE = 'Accountant'";
+    $query = "SELECT * FROM employee WHERE USERNAME = ? AND ROLE = 'Accountant'";
     $stmt = $conn->prepare($query);
     
     if(!$stmt) {

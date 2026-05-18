@@ -91,3 +91,4 @@ if ($method === 'PUT') {
 }
 
 api_error('Method not allowed', 405);
+

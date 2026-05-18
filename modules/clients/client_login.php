@@ -101,7 +101,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'login') {
         $error = 'Please enter your email and password.';
         $view  = 'login';
     } else {
-        $stmt = $conn->prepare("SELECT * FROM CLIENT WHERE COMPANY_EMAIL = ? LIMIT 1");
+        $stmt = $conn->prepare("SELECT * FROM client WHERE COMPANY_EMAIL = ? LIMIT 1");
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $client = $stmt->get_result()->fetch_assoc();
@@ -131,7 +131,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'forgot') {
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please enter a valid email address.';
     } else {
-        $stmt = $conn->prepare("SELECT CLIENT_ID, COMPANY_NAME, COMPANY_EMAIL FROM CLIENT WHERE LOWER(COMPANY_EMAIL)=? LIMIT 1");
+        $stmt = $conn->prepare("SELECT CLIENT_ID, COMPANY_NAME, COMPANY_EMAIL FROM client WHERE LOWER(COMPANY_EMAIL)=? LIMIT 1");
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $client = $stmt->get_result()->fetch_assoc();
@@ -1069,4 +1069,5 @@ function applyTheme(){
 ?>
 </body>
 </html>
+
 

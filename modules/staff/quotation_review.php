@@ -495,3 +495,4 @@ showToast(<?= json_encode($_SESSION['toast']['msg']) ?>,
 </script>
 
 <?php require_once __DIR__ . '/../../includes/acc_footer.php'; ?>
+
