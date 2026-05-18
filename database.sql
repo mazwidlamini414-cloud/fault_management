@@ -790,21 +790,18 @@ INSERT IGNORE INTO `work_log` (`LOG_ID`, `ASSIGN_ID`, `EMP_ID`, `LOG_DATE`, `LOG
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`ADMIN_ID`),
   ADD UNIQUE KEY `USERNAME` (`USERNAME`);
 
 --
 -- Indexes for table `assignment`
 --
 ALTER TABLE `assignment`
-  ADD PRIMARY KEY (`ASSIGN_ID`),
   ADD KEY `REP_FAULT_ID` (`REP_FAULT_ID`);
 
 --
 -- Indexes for table `assignment_inventory`
 --
 ALTER TABLE `assignment_inventory`
-  ADD PRIMARY KEY (`ASSIGN_INV_ID`),
   ADD KEY `ASSIGN_ID` (`ASSIGN_ID`),
   ADD KEY `ITEM_ID` (`ITEM_ID`);
 
@@ -812,14 +809,12 @@ ALTER TABLE `assignment_inventory`
 -- Indexes for table `assignment_technician`
 --
 ALTER TABLE `assignment_technician`
-  ADD PRIMARY KEY (`ASSIGN_ID`,`EMP_ID`),
   ADD KEY `EMP_ID` (`EMP_ID`);
 
 --
 -- Indexes for table `client`
 --
 ALTER TABLE `client`
-  ADD PRIMARY KEY (`CLIENT_ID`),
   ADD UNIQUE KEY `COMPANY_EMAIL` (`COMPANY_EMAIL`),
   ADD UNIQUE KEY `USERNAME` (`USERNAME`);
 
@@ -827,14 +822,12 @@ ALTER TABLE `client`
 -- Indexes for table `client_confirmations`
 --
 ALTER TABLE `client_confirmations`
-  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `fault_id` (`fault_id`,`client_id`);
 
 --
 -- Indexes for table `client_product`
 --
 ALTER TABLE `client_product`
-  ADD PRIMARY KEY (`CLIENT_PROD_ID`),
   ADD UNIQUE KEY `SERIAL_NUM` (`SERIAL_NUM`),
   ADD KEY `CLIENT_ID` (`CLIENT_ID`),
   ADD KEY `PROD_ID` (`PROD_ID`);
@@ -843,13 +836,11 @@ ALTER TABLE `client_product`
 -- Indexes for table `company_settings`
 --
 ALTER TABLE `company_settings`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
-  ADD PRIMARY KEY (`EMP_ID`),
   ADD UNIQUE KEY `EMAIL` (`EMAIL`),
   ADD UNIQUE KEY `USERNAME` (`USERNAME`);
 
@@ -857,32 +848,27 @@ ALTER TABLE `employee`
 -- Indexes for table `expenses`
 --
 ALTER TABLE `expenses`
-  ADD PRIMARY KEY (`EXPENSE_ID`);
 
 --
 -- Indexes for table `fault`
 --
 ALTER TABLE `fault`
-  ADD PRIMARY KEY (`FAULT_ID`);
 
 --
 -- Indexes for table `fault_rejections`
 --
 ALTER TABLE `fault_rejections`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `inventory_item`
 --
 ALTER TABLE `inventory_item`
-  ADD PRIMARY KEY (`ITEM_ID`),
   ADD KEY `PROD_ID` (`PROD_ID`);
 
 --
 -- Indexes for table `inventory_transaction`
 --
 ALTER TABLE `inventory_transaction`
-  ADD PRIMARY KEY (`TRANS_ID`),
   ADD KEY `ITEM_ID` (`ITEM_ID`),
   ADD KEY `ASSIGN_ID` (`ASSIGN_ID`),
   ADD KEY `EMP_ID` (`EMP_ID`);
@@ -891,7 +877,6 @@ ALTER TABLE `inventory_transaction`
 -- Indexes for table `invoice`
 --
 ALTER TABLE `invoice`
-  ADD PRIMARY KEY (`INVOICE_ID`),
   ADD KEY `CLIENT_ID` (`CLIENT_ID`),
   ADD KEY `ASSIGN_ID` (`ASSIGN_ID`);
 
@@ -899,26 +884,22 @@ ALTER TABLE `invoice`
 -- Indexes for table `invoice_line`
 --
 ALTER TABLE `invoice_line`
-  ADD PRIMARY KEY (`LINE_ID`),
   ADD KEY `INVOICE_ID` (`INVOICE_ID`);
 
 --
 -- Indexes for table `invoice_tracking`
 --
 ALTER TABLE `invoice_tracking`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `token` (`token`),
   ADD KEY `idx_token` (`token`),
   ADD KEY `idx_email` (`email`);
@@ -927,33 +908,28 @@ ALTER TABLE `password_resets`
 -- Indexes for table `payment`
 --
 ALTER TABLE `payment`
-  ADD PRIMARY KEY (`PAYMENT_ID`),
   ADD KEY `INVOICE_ID` (`INVOICE_ID`);
 
 --
 -- Indexes for table `payment_tracking`
 --
 ALTER TABLE `payment_tracking`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`PROD_ID`);
 
 --
 -- Indexes for table `receipt`
 --
 ALTER TABLE `receipt`
-  ADD PRIMARY KEY (`RECEIPT_ID`),
   ADD KEY `PAYMENT_ID` (`PAYMENT_ID`);
 
 --
 -- Indexes for table `reported_fault`
 --
 ALTER TABLE `reported_fault`
-  ADD PRIMARY KEY (`REP_FAULT_ID`),
   ADD KEY `CLIENT_ID` (`CLIENT_ID`),
   ADD KEY `CLIENT_PROD_ID` (`CLIENT_PROD_ID`),
   ADD KEY `FAULT_ID` (`FAULT_ID`);
@@ -962,7 +938,6 @@ ALTER TABLE `reported_fault`
 -- Indexes for table `unified_messages`
 --
 ALTER TABLE `unified_messages`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `to_id` (`to_id`),
   ADD KEY `from_id` (`from_id`);
 
@@ -970,13 +945,11 @@ ALTER TABLE `unified_messages`
 -- Indexes for table `workflow_confirmations`
 --
 ALTER TABLE `workflow_confirmations`
-  ADD PRIMARY KEY (`conf_id`);
 
 --
 -- Indexes for table `work_log`
 --
 ALTER TABLE `work_log`
-  ADD PRIMARY KEY (`LOG_ID`),
   ADD KEY `ASSIGN_ID` (`ASSIGN_ID`),
   ADD KEY `EMP_ID` (`EMP_ID`);
 
