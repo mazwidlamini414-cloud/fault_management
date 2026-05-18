@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE `admin` (
+CREATE TABLE IF NOT EXISTS `admin` (
   `ADMIN_ID` int(11) NOT NULL,
   `USERNAME` varchar(50) NOT NULL,
   `PASSWORD_HASH` varchar(255) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`ADMIN_ID`, `USERNAME`, `PASSWORD_HASH`, `EMAIL`, `CREATED_AT`) VALUES
+INSERT IGNORE INTO `admin` (`ADMIN_ID`, `USERNAME`, `PASSWORD_HASH`, `EMAIL`, `CREATED_AT`) VALUES
 (1, 'admin', '$2y$10$qa5HXHhSVaGKrv9dhTeclukU6wZCWK6P4ohA0IACJ3U7OZtQ3etDe', 'admin@busiquip.com', '2026-05-14 09:26:14');
 
 -- --------------------------------------------------------
@@ -48,7 +48,7 @@ INSERT INTO `admin` (`ADMIN_ID`, `USERNAME`, `PASSWORD_HASH`, `EMAIL`, `CREATED_
 -- Table structure for table `assignment`
 --
 
-CREATE TABLE `assignment` (
+CREATE TABLE IF NOT EXISTS `assignment` (
   `ASSIGN_ID` int(11) NOT NULL,
   `REP_FAULT_ID` int(11) DEFAULT NULL,
   `ASSIGN_DATE` date DEFAULT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `assignment` (
 -- Dumping data for table `assignment`
 --
 
-INSERT INTO `assignment` (`ASSIGN_ID`, `REP_FAULT_ID`, `ASSIGN_DATE`, `DUE_DATE`, `STATUS`) VALUES
+INSERT IGNORE INTO `assignment` (`ASSIGN_ID`, `REP_FAULT_ID`, `ASSIGN_DATE`, `DUE_DATE`, `STATUS`) VALUES
 (1, 2, '2026-05-15', '2026-05-22', 'Assigned'),
 (2, 1, '2026-05-15', '2026-05-24', 'Assigned'),
 (3, 3, '2026-05-16', '2026-05-23', 'Assigned'),
@@ -78,7 +78,7 @@ INSERT INTO `assignment` (`ASSIGN_ID`, `REP_FAULT_ID`, `ASSIGN_DATE`, `DUE_DATE`
 -- Table structure for table `assignment_inventory`
 --
 
-CREATE TABLE `assignment_inventory` (
+CREATE TABLE IF NOT EXISTS `assignment_inventory` (
   `ASSIGN_INV_ID` int(11) NOT NULL,
   `ASSIGN_ID` int(11) DEFAULT NULL,
   `ITEM_ID` int(11) DEFAULT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE `assignment_inventory` (
 -- Table structure for table `assignment_technician`
 --
 
-CREATE TABLE `assignment_technician` (
+CREATE TABLE IF NOT EXISTS `assignment_technician` (
   `ASSIGN_ID` int(11) NOT NULL,
   `EMP_ID` int(11) NOT NULL,
   `ROLE_IN_JOB` varchar(30) DEFAULT NULL
@@ -102,7 +102,7 @@ CREATE TABLE `assignment_technician` (
 -- Dumping data for table `assignment_technician`
 --
 
-INSERT INTO `assignment_technician` (`ASSIGN_ID`, `EMP_ID`, `ROLE_IN_JOB`) VALUES
+INSERT IGNORE INTO `assignment_technician` (`ASSIGN_ID`, `EMP_ID`, `ROLE_IN_JOB`) VALUES
 (1, 1, 'Technician'),
 (2, 9, 'Technician'),
 (3, 9, 'Technician'),
@@ -120,7 +120,7 @@ INSERT INTO `assignment_technician` (`ASSIGN_ID`, `EMP_ID`, `ROLE_IN_JOB`) VALUE
 -- Table structure for table `client`
 --
 
-CREATE TABLE `client` (
+CREATE TABLE IF NOT EXISTS `client` (
   `CLIENT_ID` int(11) NOT NULL,
   `COMPANY_NAME` varchar(150) NOT NULL,
   `COMPANY_PHONE` varchar(30) DEFAULT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE `client` (
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`CLIENT_ID`, `COMPANY_NAME`, `COMPANY_PHONE`, `COMPANY_EMAIL`, `COMPANY_ADDRESS`, `CONTACT_PERSON_NAME`, `CLIENT_TYPE`, `USERNAME`, `PASSWORD_HASH`, `WALLET_BALANCE`) VALUES
+INSERT IGNORE INTO `client` (`CLIENT_ID`, `COMPANY_NAME`, `COMPANY_PHONE`, `COMPANY_EMAIL`, `COMPANY_ADDRESS`, `CONTACT_PERSON_NAME`, `CLIENT_TYPE`, `USERNAME`, `PASSWORD_HASH`, `WALLET_BALANCE`) VALUES
 (1, 'ECOT', '+26879121232', 'ecot@gmail.com', '12344', 'MAZWI', 'GOVERNMENT', 'mhlond', '$2y$10$lL/u2cd6BLYfKiK75FoHEOTtSHVP1lA8QujWlaQoCiTl055YEQzee', 0.00),
 (2, 'limko', '+26878787676', 'tsela@gmail.com', '123err', 'tsela', 'CORPORATE', 'LECTURE', '$2y$10$fKaH3cS654XnM/v8J8P8qeRzKZEdss/gEwwvhHkioFbhmLEqkIIdS', 0.00),
 (3, 'Limko', '+26878180264', 'mazwinkhocy@gmail.com', 'Mbabane', 'Mazwo', 'GOVERNMENT', 'Mazwi', '$2y$10$4yPeqbgMc4zXW4yKk1QqCeXzeKBKwMQEuWv4hdppPn.LL9HNfzaCO', 0.00);
@@ -148,7 +148,7 @@ INSERT INTO `client` (`CLIENT_ID`, `COMPANY_NAME`, `COMPANY_PHONE`, `COMPANY_EMA
 -- Table structure for table `client_confirmations`
 --
 
-CREATE TABLE `client_confirmations` (
+CREATE TABLE IF NOT EXISTS `client_confirmations` (
   `id` int(11) NOT NULL,
   `fault_id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE `client_confirmations` (
 -- Dumping data for table `client_confirmations`
 --
 
-INSERT INTO `client_confirmations` (`id`, `fault_id`, `client_id`, `confirmation_status`, `confirmation_notes`, `confirmed_at`, `created_at`) VALUES
+INSERT IGNORE INTO `client_confirmations` (`id`, `fault_id`, `client_id`, `confirmation_status`, `confirmation_notes`, `confirmed_at`, `created_at`) VALUES
 (1, 3, 1, 'Confirmed', NULL, '2026-05-16 14:55:50', '2026-05-16 12:55:50'),
 (2, 6, 1, 'Confirmed', NULL, '2026-05-16 18:23:40', '2026-05-16 16:23:40'),
 (3, 7, 1, 'Confirmed', NULL, '2026-05-17 05:33:51', '2026-05-17 03:33:51'),
@@ -175,7 +175,7 @@ INSERT INTO `client_confirmations` (`id`, `fault_id`, `client_id`, `confirmation
 -- Table structure for table `client_product`
 --
 
-CREATE TABLE `client_product` (
+CREATE TABLE IF NOT EXISTS `client_product` (
   `CLIENT_PROD_ID` int(11) NOT NULL,
   `CLIENT_ID` int(11) DEFAULT NULL,
   `PROD_ID` int(11) DEFAULT NULL,
@@ -190,7 +190,7 @@ CREATE TABLE `client_product` (
 -- Table structure for table `company_settings`
 --
 
-CREATE TABLE `company_settings` (
+CREATE TABLE IF NOT EXISTS `company_settings` (
   `id` int(11) NOT NULL,
   `company_name` varchar(150) DEFAULT 'BUSIQUIP ESWATINI',
   `company_balance` decimal(15,2) DEFAULT 50000.00,
@@ -201,7 +201,7 @@ CREATE TABLE `company_settings` (
 -- Dumping data for table `company_settings`
 --
 
-INSERT INTO `company_settings` (`id`, `company_name`, `company_balance`, `last_updated`) VALUES
+INSERT IGNORE INTO `company_settings` (`id`, `company_name`, `company_balance`, `last_updated`) VALUES
 (1, 'BUSIQUIP ESWATINI', 55126.00, '2026-05-16 16:41:36');
 
 -- --------------------------------------------------------
@@ -210,7 +210,7 @@ INSERT INTO `company_settings` (`id`, `company_name`, `company_balance`, `last_u
 -- Table structure for table `employee`
 --
 
-CREATE TABLE `employee` (
+CREATE TABLE IF NOT EXISTS `employee` (
   `EMP_ID` int(11) NOT NULL,
   `FULL_NAME` varchar(150) NOT NULL,
   `EMAIL` varchar(100) DEFAULT NULL,
@@ -225,7 +225,7 @@ CREATE TABLE `employee` (
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`EMP_ID`, `FULL_NAME`, `EMAIL`, `ROLE`, `HIRE_DATE`, `HOURLY_RATE`, `USERNAME`, `PASSWORD_HASH`) VALUES
+INSERT IGNORE INTO `employee` (`EMP_ID`, `FULL_NAME`, `EMAIL`, `ROLE`, `HIRE_DATE`, `HOURLY_RATE`, `USERNAME`, `PASSWORD_HASH`) VALUES
 (1, 'muzi', 'muzi@gmail.com', 'Technician', '2026-05-15', 0.00, 'Tsela', '$2y$10$/CNG85tReaz8h/CSKCqsEud5pG.H7nqeLKEblYyVfOSPsKURTIae6'),
 (8, 'Mark Accountant', 'mark@gmail.com', 'Accountant', '2026-05-15', 0.00, 'mark@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
 (9, 'John Technician', 'john@gmail.com', 'Technician', '2026-05-15', 0.00, 'john@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
@@ -237,7 +237,7 @@ INSERT INTO `employee` (`EMP_ID`, `FULL_NAME`, `EMAIL`, `ROLE`, `HIRE_DATE`, `HO
 -- Table structure for table `expenses`
 --
 
-CREATE TABLE `expenses` (
+CREATE TABLE IF NOT EXISTS `expenses` (
   `EXPENSE_ID` int(11) NOT NULL,
   `CATEGORY` varchar(100) NOT NULL,
   `AMOUNT` decimal(10,2) NOT NULL,
@@ -252,7 +252,7 @@ CREATE TABLE `expenses` (
 -- Table structure for table `fault`
 --
 
-CREATE TABLE `fault` (
+CREATE TABLE IF NOT EXISTS `fault` (
   `FAULT_ID` int(11) NOT NULL,
   `FAULT_TYPE` varchar(100) DEFAULT NULL,
   `FAULT_DESCRIPTION` text DEFAULT NULL,
@@ -264,7 +264,7 @@ CREATE TABLE `fault` (
 -- Dumping data for table `fault`
 --
 
-INSERT INTO `fault` (`FAULT_ID`, `FAULT_TYPE`, `FAULT_DESCRIPTION`, `DEFAULT_PRIORITY`, `DEFAULT_SLA_DAYS`) VALUES
+INSERT IGNORE INTO `fault` (`FAULT_ID`, `FAULT_TYPE`, `FAULT_DESCRIPTION`, `DEFAULT_PRIORITY`, `DEFAULT_SLA_DAYS`) VALUES
 (1, 'Hardware Failure', 'Physical damage or malfunction of computer hardware components', 'High', 2),
 (2, 'Software / System Error', 'Application crashes, OS errors, software not responding', 'Medium', 3),
 (3, 'Network / Connectivity', 'Internet down, LAN issues, Wi-Fi not connecting', 'High', 1),
@@ -286,7 +286,7 @@ INSERT INTO `fault` (`FAULT_ID`, `FAULT_TYPE`, `FAULT_DESCRIPTION`, `DEFAULT_PRI
 -- Table structure for table `fault_rejections`
 --
 
-CREATE TABLE `fault_rejections` (
+CREATE TABLE IF NOT EXISTS `fault_rejections` (
   `id` int(11) NOT NULL,
   `fault_id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
@@ -300,7 +300,7 @@ CREATE TABLE `fault_rejections` (
 -- Table structure for table `inventory_item`
 --
 
-CREATE TABLE `inventory_item` (
+CREATE TABLE IF NOT EXISTS `inventory_item` (
   `ITEM_ID` int(11) NOT NULL,
   `PROD_ID` int(11) DEFAULT NULL,
   `SERIAL_NUM` varchar(100) DEFAULT NULL,
@@ -315,7 +315,7 @@ CREATE TABLE `inventory_item` (
 -- Table structure for table `inventory_transaction`
 --
 
-CREATE TABLE `inventory_transaction` (
+CREATE TABLE IF NOT EXISTS `inventory_transaction` (
   `TRANS_ID` int(11) NOT NULL,
   `ITEM_ID` int(11) DEFAULT NULL,
   `TRANS_TYPE` varchar(20) DEFAULT NULL,
@@ -331,7 +331,7 @@ CREATE TABLE `inventory_transaction` (
 -- Table structure for table `invoice`
 --
 
-CREATE TABLE `invoice` (
+CREATE TABLE IF NOT EXISTS `invoice` (
   `INVOICE_ID` int(11) NOT NULL,
   `CLIENT_ID` int(11) DEFAULT NULL,
   `ASSIGN_ID` int(11) DEFAULT NULL,
@@ -347,7 +347,7 @@ CREATE TABLE `invoice` (
 -- Dumping data for table `invoice`
 --
 
-INSERT INTO `invoice` (`INVOICE_ID`, `CLIENT_ID`, `ASSIGN_ID`, `INVOICE_DATE`, `DUE_DATE`, `STATUS`, `TYPE`, `TOTAL`, `PAID_AMOUNT`) VALUES
+INSERT IGNORE INTO `invoice` (`INVOICE_ID`, `CLIENT_ID`, `ASSIGN_ID`, `INVOICE_DATE`, `DUE_DATE`, `STATUS`, `TYPE`, `TOTAL`, `PAID_AMOUNT`) VALUES
 (1, 1, 2, '2026-05-15', '2026-05-29', 'Paid', 'Quotation', 395.00, 395.00),
 (2, 1, 2, '2026-05-15', '2026-05-29', 'Paid', 'Quotation', 4731.00, 4731.00),
 (3, 1, 2, '2026-05-15', '2026-05-29', 'Paid', 'Quotation', 1452.00, 0.00),
@@ -367,7 +367,7 @@ INSERT INTO `invoice` (`INVOICE_ID`, `CLIENT_ID`, `ASSIGN_ID`, `INVOICE_DATE`, `
 -- Table structure for table `invoice_line`
 --
 
-CREATE TABLE `invoice_line` (
+CREATE TABLE IF NOT EXISTS `invoice_line` (
   `LINE_ID` int(11) NOT NULL,
   `INVOICE_ID` int(11) DEFAULT NULL,
   `DESCRIPTION` varchar(255) DEFAULT NULL,
@@ -380,7 +380,7 @@ CREATE TABLE `invoice_line` (
 -- Dumping data for table `invoice_line`
 --
 
-INSERT INTO `invoice_line` (`LINE_ID`, `INVOICE_ID`, `DESCRIPTION`, `QUANTITY`, `UNIT_PRICE`, `LINE_TOTAL`) VALUES
+INSERT IGNORE INTO `invoice_line` (`LINE_ID`, `INVOICE_ID`, `DESCRIPTION`, `QUANTITY`, `UNIT_PRICE`, `LINE_TOTAL`) VALUES
 (1, 1, 'Labour – Technician time', 4, 85.00, 340.00),
 (2, 1, 'Transport – Travel & fuel', 1, 55.00, 55.00),
 (3, 2, 'Labour – Technician time', 55, 85.00, 4675.00),
@@ -420,7 +420,7 @@ INSERT INTO `invoice_line` (`LINE_ID`, `INVOICE_ID`, `DESCRIPTION`, `QUANTITY`, 
 -- Table structure for table `invoice_tracking`
 --
 
-CREATE TABLE `invoice_tracking` (
+CREATE TABLE IF NOT EXISTS `invoice_tracking` (
   `id` int(11) NOT NULL,
   `invoice_id` int(11) DEFAULT NULL,
   `action` varchar(100) DEFAULT NULL,
@@ -434,7 +434,7 @@ CREATE TABLE `invoice_tracking` (
 -- Dumping data for table `invoice_tracking`
 --
 
-INSERT INTO `invoice_tracking` (`id`, `invoice_id`, `action`, `description`, `performed_by_id`, `performed_by_role`, `created_at`) VALUES
+INSERT IGNORE INTO `invoice_tracking` (`id`, `invoice_id`, `action`, `description`, `performed_by_id`, `performed_by_role`, `created_at`) VALUES
 (1, 1, 'Quotation Submitted', 'Quotation created by technician John Technician for fault #1', 9, 'Technician', '2026-05-15 13:08:21'),
 (2, 2, 'Quotation Submitted', 'Quotation created by technician John Technician for fault #1', 9, 'Technician', '2026-05-15 18:48:44'),
 (3, 3, 'Quotation Submitted', 'Quotation created by technician John Technician for fault #1', 9, 'Technician', '2026-05-15 19:01:11'),
@@ -466,7 +466,7 @@ INSERT INTO `invoice_tracking` (`id`, `invoice_id`, `action`, `description`, `pe
 -- Table structure for table `notifications`
 --
 
-CREATE TABLE `notifications` (
+CREATE TABLE IF NOT EXISTS `notifications` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `user_type` varchar(50) DEFAULT NULL,
@@ -480,7 +480,7 @@ CREATE TABLE `notifications` (
 -- Dumping data for table `notifications`
 --
 
-INSERT INTO `notifications` (`id`, `user_id`, `user_type`, `title`, `message`, `is_read`, `created_at`) VALUES
+INSERT IGNORE INTO `notifications` (`id`, `user_id`, `user_type`, `title`, `message`, `is_read`, `created_at`) VALUES
 (1, 1, 'Admin', 'New Message from John Technician', 'ff', 0, '2026-05-15 13:06:51'),
 (2, 2, 'Employee', 'New Quotation Submitted', 'Technician John Technician submitted quotation #1 (E395) for fault #1. Please review and create invoice.', 0, '2026-05-15 13:08:21'),
 (3, 1, 'Admin', 'Work Started', 'Technician John Technician started work on fault #1', 0, '2026-05-15 18:46:27'),
@@ -561,7 +561,7 @@ INSERT INTO `notifications` (`id`, `user_id`, `user_type`, `title`, `message`, `
 -- Table structure for table `password_resets`
 --
 
-CREATE TABLE `password_resets` (
+CREATE TABLE IF NOT EXISTS `password_resets` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `token` varchar(64) NOT NULL,
@@ -574,7 +574,7 @@ CREATE TABLE `password_resets` (
 -- Dumping data for table `password_resets`
 --
 
-INSERT INTO `password_resets` (`id`, `email`, `token`, `expires_at`, `used`, `created_at`) VALUES
+INSERT IGNORE INTO `password_resets` (`id`, `email`, `token`, `expires_at`, `used`, `created_at`) VALUES
 (1, 'ecot@gmail.com', '816a2fcd63fd58e2a5567ce4447dd337de1cf7b7f53da4828b1a5bf9d24b757b', '2026-05-17 07:30:56', 0, '2026-05-17 07:00:56');
 
 -- --------------------------------------------------------
@@ -583,7 +583,7 @@ INSERT INTO `password_resets` (`id`, `email`, `token`, `expires_at`, `used`, `cr
 -- Table structure for table `payment`
 --
 
-CREATE TABLE `payment` (
+CREATE TABLE IF NOT EXISTS `payment` (
   `PAYMENT_ID` int(11) NOT NULL,
   `INVOICE_ID` int(11) DEFAULT NULL,
   `PAYMENT_DATE` date DEFAULT NULL,
@@ -597,7 +597,7 @@ CREATE TABLE `payment` (
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`PAYMENT_ID`, `INVOICE_ID`, `PAYMENT_DATE`, `AMOUNT_PAID`, `METHOD`, `REFERENCE_NUMBER`, `STATUS`) VALUES
+INSERT IGNORE INTO `payment` (`PAYMENT_ID`, `INVOICE_ID`, `PAYMENT_DATE`, `AMOUNT_PAID`, `METHOD`, `REFERENCE_NUMBER`, `STATUS`) VALUES
 (1, 2, '2026-05-15', 4731.00, 'Card Transfer', '', 'Verified'),
 (2, 1, '2026-05-15', 395.00, 'Card Transfer', '', 'Verified');
 
@@ -607,7 +607,7 @@ INSERT INTO `payment` (`PAYMENT_ID`, `INVOICE_ID`, `PAYMENT_DATE`, `AMOUNT_PAID`
 -- Table structure for table `payment_tracking`
 --
 
-CREATE TABLE `payment_tracking` (
+CREATE TABLE IF NOT EXISTS `payment_tracking` (
   `id` int(11) NOT NULL,
   `payment_id` int(11) DEFAULT NULL,
   `action` varchar(100) DEFAULT NULL,
@@ -621,7 +621,7 @@ CREATE TABLE `payment_tracking` (
 -- Dumping data for table `payment_tracking`
 --
 
-INSERT INTO `payment_tracking` (`id`, `payment_id`, `action`, `old_status`, `new_status`, `notes`, `created_at`) VALUES
+INSERT IGNORE INTO `payment_tracking` (`id`, `payment_id`, `action`, `old_status`, `new_status`, `notes`, `created_at`) VALUES
 (1, 1, 'Verified', 'Pending', 'Verified', '', '2026-05-16 15:49:53'),
 (2, 2, 'Verified', 'Pending', 'Verified', '', '2026-05-16 16:41:36');
 
@@ -631,7 +631,7 @@ INSERT INTO `payment_tracking` (`id`, `payment_id`, `action`, `old_status`, `new
 -- Table structure for table `product`
 --
 
-CREATE TABLE `product` (
+CREATE TABLE IF NOT EXISTS `product` (
   `PROD_ID` int(11) NOT NULL,
   `PROD_NAME` varchar(150) DEFAULT NULL,
   `PROD_DESCRIPTION` text DEFAULT NULL,
@@ -644,7 +644,7 @@ CREATE TABLE `product` (
 -- Table structure for table `receipt`
 --
 
-CREATE TABLE `receipt` (
+CREATE TABLE IF NOT EXISTS `receipt` (
   `RECEIPT_ID` int(11) NOT NULL,
   `PAYMENT_ID` int(11) DEFAULT NULL,
   `RECEIPT_DATE` date DEFAULT NULL,
@@ -655,7 +655,7 @@ CREATE TABLE `receipt` (
 -- Dumping data for table `receipt`
 --
 
-INSERT INTO `receipt` (`RECEIPT_ID`, `PAYMENT_ID`, `RECEIPT_DATE`, `RECEIPT_DATA`) VALUES
+INSERT IGNORE INTO `receipt` (`RECEIPT_ID`, `PAYMENT_ID`, `RECEIPT_DATE`, `RECEIPT_DATA`) VALUES
 (1, 1, '2026-05-16', '{\"payment_id\":1,\"invoice_id\":2,\"company\":\"ECOT\",\"amount\":4731,\"method\":\"Card Transfer\",\"reference\":\"\",\"verified_by\":\"Mark Accountant\",\"verified_at\":\"2026-05-16 17:49:53\"}'),
 (2, 2, '2026-05-16', '{\"payment_id\":2,\"invoice_id\":1,\"company\":\"ECOT\",\"amount\":395,\"method\":\"Card Transfer\",\"reference\":\"\",\"verified_by\":\"Mark Accountant\",\"verified_at\":\"2026-05-16 18:41:36\"}');
 
@@ -665,7 +665,7 @@ INSERT INTO `receipt` (`RECEIPT_ID`, `PAYMENT_ID`, `RECEIPT_DATE`, `RECEIPT_DATA
 -- Table structure for table `reported_fault`
 --
 
-CREATE TABLE `reported_fault` (
+CREATE TABLE IF NOT EXISTS `reported_fault` (
   `REP_FAULT_ID` int(11) NOT NULL,
   `CLIENT_ID` int(11) DEFAULT NULL,
   `CLIENT_PROD_ID` int(11) DEFAULT NULL,
@@ -681,7 +681,7 @@ CREATE TABLE `reported_fault` (
 -- Dumping data for table `reported_fault`
 --
 
-INSERT INTO `reported_fault` (`REP_FAULT_ID`, `CLIENT_ID`, `CLIENT_PROD_ID`, `FAULT_ID`, `REPORT_DATE`, `STATUS`, `PRIORITY`, `REPORTED_BY`, `DESCRIPTION`) VALUES
+INSERT IGNORE INTO `reported_fault` (`REP_FAULT_ID`, `CLIENT_ID`, `CLIENT_PROD_ID`, `FAULT_ID`, `REPORT_DATE`, `STATUS`, `PRIORITY`, `REPORTED_BY`, `DESCRIPTION`) VALUES
 (1, 1, NULL, NULL, '2026-05-15 06:41:00', 'Assigned', 'High', 'MAZWI', 'kk'),
 (2, 1, NULL, NULL, '2026-05-15 07:44:13', 'Assigned', 'Low', 'MAZWI', 'FAULT REFERENCE: BQ-2026-52733\nFAULT TITLE: gr rrgfg rhrh\nCATEGORY: Software / System Error\nEQUIPMENT TYPE: Server\nBRAND/MODEL: ytt r4\nSERIAL/ASSET NO: 565f566\nFAULT DATE/TIME: 2026-05-15 07:39\nIS OPERATIONAL: No\nOCCURRED BEFORE: No\nUSERS AFFECTED: 1\nFAULT LOCATION: gfg rhrrr\nDEPARTMENT/BRANCH: tr rhrgrhr\nPREFERRED CONTACT: Phone\nSERVICE VISIT REQUIRED: Yes\n\nDETAILED DESCRIPTION:\nhrgyr rhyryryr nhehh eegge ege'),
 (3, 1, NULL, NULL, '2026-05-16 10:51:46', 'Client Approved', 'Low', 'LINDO', 'FAULT REFERENCE: BQ-2026-99322\nFAULT TITLE: PRINTER ISSUES\nCATEGORY: Network / Connectivity\nEQUIPMENT TYPE: Scanner\nBRAND/MODEL: 434343443\nSERIAL/ASSET NO: 45555\nFAULT DATE/TIME: 2026-05-16 10:49\nIS OPERATIONAL: Yes\nOCCURRED BEFORE: No\nUSERS AFFECTED: 13\nFAULT LOCATION: DOWN\nDEPARTMENT/BRANCH: IT\nPREFERRED CONTACT: Email\nSERVICE VISIT REQUIRED: Yes\n\nDETAILED DESCRIPTION:\nTI REFEF EGET EFEF EGFEF EFEF EFEF EFEF'),
@@ -701,7 +701,7 @@ INSERT INTO `reported_fault` (`REP_FAULT_ID`, `CLIENT_ID`, `CLIENT_PROD_ID`, `FA
 -- Table structure for table `unified_messages`
 --
 
-CREATE TABLE `unified_messages` (
+CREATE TABLE IF NOT EXISTS `unified_messages` (
   `id` int(11) NOT NULL,
   `from_id` int(11) DEFAULT NULL,
   `from_type` enum('Client','Employee','Admin') DEFAULT NULL,
@@ -721,7 +721,7 @@ CREATE TABLE `unified_messages` (
 -- Dumping data for table `unified_messages`
 --
 
-INSERT INTO `unified_messages` (`id`, `from_id`, `from_type`, `from_name`, `to_id`, `to_type`, `to_name`, `subject`, `content`, `priority`, `is_read`, `read_at`, `sent_time`) VALUES
+INSERT IGNORE INTO `unified_messages` (`id`, `from_id`, `from_type`, `from_name`, `to_id`, `to_type`, `to_name`, `subject`, `content`, `priority`, `is_read`, `read_at`, `sent_time`) VALUES
 (1, 1, 'Client', 'ECOT (Government)', 1, 'Admin', NULL, 'Portal Inquiry', 'bhh', 'Normal', 0, NULL, '2026-05-14 16:13:10'),
 (2, 9, 'Employee', 'John Technician', 1, 'Admin', 'Admin', 'ff', 'ffff', 'Normal', 0, NULL, '2026-05-15 13:06:51');
 
@@ -731,7 +731,7 @@ INSERT INTO `unified_messages` (`id`, `from_id`, `from_type`, `from_name`, `to_i
 -- Table structure for table `workflow_confirmations`
 --
 
-CREATE TABLE `workflow_confirmations` (
+CREATE TABLE IF NOT EXISTS `workflow_confirmations` (
   `conf_id` int(11) NOT NULL,
   `REP_FAULT_ID` int(11) NOT NULL,
   `CLIENT_ID` int(11) NOT NULL,
@@ -746,7 +746,7 @@ CREATE TABLE `workflow_confirmations` (
 -- Table structure for table `work_log`
 --
 
-CREATE TABLE `work_log` (
+CREATE TABLE IF NOT EXISTS `work_log` (
   `LOG_ID` int(11) NOT NULL,
   `ASSIGN_ID` int(11) DEFAULT NULL,
   `EMP_ID` int(11) DEFAULT NULL,
@@ -760,7 +760,7 @@ CREATE TABLE `work_log` (
 -- Dumping data for table `work_log`
 --
 
-INSERT INTO `work_log` (`LOG_ID`, `ASSIGN_ID`, `EMP_ID`, `LOG_DATE`, `LOG_TYPE`, `ACTION_TAKEN`, `HOURS_SPENT`) VALUES
+INSERT IGNORE INTO `work_log` (`LOG_ID`, `ASSIGN_ID`, `EMP_ID`, `LOG_DATE`, `LOG_TYPE`, `ACTION_TAKEN`, `HOURS_SPENT`) VALUES
 (1, 2, 9, '2026-05-15 18:46:27', 'Start', 'Work started by technician', 0.00),
 (2, 2, 9, '2026-05-15 18:46:47', 'Complete', 'hhh', 0.00),
 (3, 3, 9, '2026-05-16 08:54:38', 'Start', 'Work started by technician', 0.00),

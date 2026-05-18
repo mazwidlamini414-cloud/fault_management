@@ -7,13 +7,12 @@ DB_USER="${MYSQLUSER:-${DB_USER:-root}}"
 DB_PASS="${MYSQLPASSWORD:-${DB_PASSWORD:-}}"
 DB_NAME="${MYSQLDATABASE:-${DB_NAME:-busiquip_final}}"
 SQL_FILE="/var/www/html/database.sql"
-FLAG_FILE="/var/www/html/.db_imported"
 
-# FIX: Ensure Apache runtime dirs exist (needed on fresh container start)
+# Ensure Apache runtime dirs exist
 mkdir -p /var/run/apache2 /var/lock/apache2 /var/log/apache2
 chown www-data:www-data /var/run/apache2 /var/lock/apache2 /var/log/apache2
 
-# Background job: wait for DB then import schema once
+# Background job: wait for DB then import schema (safe to run multiple times)
 (
     echo "Waiting for database at ${DB_HOST}:${DB_PORT}..."
     RETRIES=30
@@ -21,16 +20,17 @@ chown www-data:www-data /var/run/apache2 /var/lock/apache2 /var/log/apache2
         RETRIES=$((RETRIES - 1))
         if [ $RETRIES -eq 0 ]; then
             echo "WARNING: Could not connect to DB after 30 retries. Skipping import."
-            break
+            exit 0
         fi
         sleep 3
     done
+    echo "mysqld is alive"
 
-    if [ ! -f "${FLAG_FILE}" ] && [ -f "${SQL_FILE}" ]; then
+    if [ -f "${SQL_FILE}" ]; then
         echo "Importing database schema..."
-        mysql -h"${DB_HOST}" -P"${DB_PORT}" -u"${DB_USER}" -p"${DB_PASS}" "${DB_NAME}" < "${SQL_FILE}" \
-            && touch "${FLAG_FILE}" \
-            && echo "Database import complete."
+        # FIX: Use --force so existing tables don't crash the import
+        mysql --force -h"${DB_HOST}" -P"${DB_PORT}" -u"${DB_USER}" -p"${DB_PASS}" "${DB_NAME}" < "${SQL_FILE}" 2>&1 | grep -v "Warning: Using a password"
+        echo "Database import complete."
     fi
 ) &
 
