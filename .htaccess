@@ -1,19 +1,21 @@
-# BUSIQUIP Fault Management System
+# ─────────────────────────────────────────────────────────────
+#  .htaccess  —  BUSIQUIP Fault Management System
+# ─────────────────────────────────────────────────────────────
 
 Options -Indexes
 
+# ── Rewrite engine ─────────────────────────────────────────────
 RewriteEngine On
 
-# 1. Always allow healthcheck through - no redirects, no conditions
-RewriteRule ^healthz\.php$ - [L,NC]
+# FIX: Exclude healthcheck endpoint from ALL redirects
+RewriteRule ^healthz\.php$ - [L]
 
-# 2. Force HTTPS only when X-Forwarded-Proto is http AND not internal Railway health check
+# Force HTTPS on Railway / production (only when behind HTTPS proxy)
 RewriteCond %{HTTP:X-Forwarded-Proto} =http
 RewriteCond %{HTTP_HOST} !^localhost [NC]
-RewriteCond %{HTTP_USER_AGENT} !^Go-http-client [NC]
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Security headers
+# ── Security headers ───────────────────────────────────────────
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
@@ -21,8 +23,8 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Block direct access to sensitive files
-<FilesMatch "\.(sql|log|sh|env|md|yml|yaml)$">
+# ── Block direct access to sensitive files ─────────────────────
+<FilesMatch "\.(sql|log|sh|env|md|yml|yaml|json)$">
     Require all denied
 </FilesMatch>
 
@@ -30,20 +32,29 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     Require all denied
 </FilesMatch>
 
+# ── Block access to hidden files (.git, .env, etc.) ────────────
 <FilesMatch "^\.">
     Require all denied
 </FilesMatch>
 
-# Browser caching
+# ── Browser caching for static assets ─────────────────────────
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType image/jpeg "access plus 1 month"
     ExpiresByType image/png  "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/gif  "access plus 1 month"
     ExpiresByType text/css   "access plus 1 week"
     ExpiresByType application/javascript "access plus 1 week"
 </IfModule>
 
-# Compression
+# ── Compression ────────────────────────────────────────────────
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/css application/javascript text/plain
+</IfModule>
+
+# ── PHP error display off in production ────────────────────────
+<IfModule mod_php.c>
+    php_flag display_errors Off
+    php_flag log_errors On
 </IfModule>
