@@ -7,6 +7,9 @@ Options -Indexes
 # ── Rewrite engine ─────────────────────────────────────────────
 RewriteEngine On
 
+# FIX: Exclude healthcheck endpoint from ALL redirects
+RewriteRule ^healthz\.php$ - [L]
+
 # Force HTTPS on Railway / production (only when behind HTTPS proxy)
 RewriteCond %{HTTP:X-Forwarded-Proto} =http
 RewriteCond %{HTTP_HOST} !^localhost [NC]
