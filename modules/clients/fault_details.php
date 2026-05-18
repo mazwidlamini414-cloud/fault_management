@@ -282,3 +282,4 @@ $page_subtitle = 'Fault #' . $fault_id;
 
 <?php require_once 'includes/tech_footer.php'; ?>
 
+

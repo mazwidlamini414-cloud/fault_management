@@ -187,3 +187,4 @@ new Chart(document.getElementById('perf-chart'),{
 
 <?php require_once '../../includes/tech_footer.php'; ?>
 
+

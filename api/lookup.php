@@ -68,3 +68,4 @@ if (!$type) api_error("'type' parameter is required. Options: fault_types, clien
 api_error("Unknown type '$type'");
 
 
+

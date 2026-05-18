@@ -192,3 +192,4 @@ tick(); setInterval(tick,1000);
 
 <?php require_once 'includes/tech_footer.php'; ?>
 
+
