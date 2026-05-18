@@ -1,4 +1,7 @@
-<?php 
+<?php
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
+
 session_start();
 
 require_once __DIR__ . '/config/database.php';
@@ -2159,7 +2162,10 @@ $stats = getOperationalStats($conn);
     <!-- FOOTER -->
     <footer>
         <div class="footer-content">
-            <span><i class="fas fa-copyright"></i> <?php echo date("Y"); ?> BUSIQUIP</span>
+            <span><i class="fas fa-copyright"></i> <?php
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
+echo date("Y"); ?> BUSIQUIP</span>
             <span>•</span>
             <span><i class="fas fa-cog"></i> Professional Equipment Fault Management System</span>
             <span>•</span>
