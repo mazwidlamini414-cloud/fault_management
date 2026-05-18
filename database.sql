@@ -1240,16 +1240,14 @@ ALTER TABLE `work_log`
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 CREATE TABLE IF NOT EXISTS `api_tokens` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `token` varchar(255) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `user_type` varchar(50) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `expires_at` timestamp NULL DEFAULT NULL
+  `token`      varchar(64)  NOT NULL,
+  `user_id`    int(11)      NOT NULL,
+  `user_type`  varchar(20)  NOT NULL COMMENT 'Client|Technician|Accountant|Admin',
+  `user_name`  varchar(150) NOT NULL,
+  `created_at` timestamp    NOT NULL DEFAULT current_timestamp(),
+  `expires_at` timestamp    NOT NULL,
+  PRIMARY KEY (`token`),
+  KEY `idx_user` (`user_id`, `user_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-ALTER TABLE `api_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `token` (`token`);
 
 COMMIT;
