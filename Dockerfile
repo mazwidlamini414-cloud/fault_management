@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-jpeg --with-webp \
     && docker-php-ext-install gd mysqli pdo pdo_mysql zip \
     && a2enmod rewrite \
+   && a2dismod mpm_event || true \
+   && a2enmod mpm_prefork \
     && a2dismod mpm_event || true \
     && a2enmod mpm_prefork \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
