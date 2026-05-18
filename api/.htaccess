@@ -1,0 +1,7 @@
+# Block direct browser access to middleware.php
+<Files "middleware.php">
+    Require all denied
+</Files>
+
+# All API responses are JSON — no directory listing
+Options -Indexes

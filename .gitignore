@@ -1,0 +1,28 @@
+# ── Secrets ───────────────────────────────────────────────────
+.env
+.env.*
+
+# ── User-uploaded content (don't commit binary uploads) ───────
+uploads/faults/*
+uploads/repair_documents/*
+!uploads/faults/.gitkeep
+!uploads/repair_documents/.gitkeep
+
+# ── Logs ──────────────────────────────────────────────────────
+logs/*.log
+!logs/.gitkeep
+
+# ── Backups ───────────────────────────────────────────────────
+backups/*
+!backups/.gitkeep
+
+# ── DB import flag ────────────────────────────────────────────
+.db_imported
+
+# ── OS / editor ───────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/

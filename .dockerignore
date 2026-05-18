@@ -1,0 +1,24 @@
+# ── Version control ───────────────────────────────────────────
+.git
+.gitignore
+
+# ── Dev / CI files ────────────────────────────────────────────
+.env
+.env.*
+docker-compose*.yml
+README.md
+*.md
+
+# ── OS junk ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# ── Logs & temp ───────────────────────────────────────────────
+logs/*.log
+backups/*
+
+# ── Keep uploads folder structure but not content ────────────
+uploads/faults/*
+uploads/repair_documents/*
