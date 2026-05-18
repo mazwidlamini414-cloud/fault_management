@@ -1,5 +1,5 @@
 <?php
-ini_set("display_errors", 1);
+ini_set("display_errors", 0);
 error_reporting(E_ALL);
 
 session_start();
@@ -38,27 +38,27 @@ function getOperationalStats($conn) {
     $stats = array();
     
     // Total Reported Faults
-    $result = $conn->query("SELECT COUNT(*) as total FROM REPORTED_FAULT");
+    $result = $conn->query("SELECT COUNT(*) as total FROM reported_fault");
     $stats['total_faults'] = $result->fetch_assoc()['total'];
     
     // Pending Faults
-    $result = $conn->query("SELECT COUNT(*) as total FROM REPORTED_FAULT WHERE STATUS = 'Pending'");
+    $result = $conn->query("SELECT COUNT(*) as total FROM reported_fault WHERE STATUS = 'Pending'");
     $stats['pending_faults'] = $result->fetch_assoc()['total'];
     
     // In Progress
-    $result = $conn->query("SELECT COUNT(*) as total FROM REPORTED_FAULT WHERE STATUS = 'In Progress'");
+    $result = $conn->query("SELECT COUNT(*) as total FROM reported_fault WHERE STATUS = 'In Progress'");
     $stats['in_progress'] = $result->fetch_assoc()['total'];
     
     // Completed
-    $result = $conn->query("SELECT COUNT(*) as total FROM REPORTED_FAULT WHERE STATUS = 'Completed'");
+    $result = $conn->query("SELECT COUNT(*) as total FROM reported_fault WHERE STATUS = 'Completed'");
     $stats['completed'] = $result->fetch_assoc()['total'];
     
     // Total Clients
-    $result = $conn->query("SELECT COUNT(*) as total FROM CLIENT");
+    $result = $conn->query("SELECT COUNT(*) as total FROM client");
     $stats['total_clients'] = $result->fetch_assoc()['total'];
     
     // Active Technicians
-    $result = $conn->query("SELECT COUNT(*) as total FROM EMPLOYEE WHERE ROLE = 'Technician'");
+    $result = $conn->query("SELECT COUNT(*) as total FROM employee WHERE ROLE = 'Technician'");
     $stats['active_technicians'] = $result->fetch_assoc()['total'];
     
     return $stats;
@@ -2163,7 +2163,7 @@ $stats = getOperationalStats($conn);
     <footer>
         <div class="footer-content">
             <span><i class="fas fa-copyright"></i> <?php
-ini_set("display_errors", 1);
+ini_set("display_errors", 0);
 error_reporting(E_ALL);
 echo date("Y"); ?> BUSIQUIP</span>
             <span>•</span>
