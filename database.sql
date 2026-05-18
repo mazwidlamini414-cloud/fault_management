@@ -1142,85 +1142,95 @@ ALTER TABLE `work_log`
 
 --
 -- Constraints for dumped tables
+-- DROP ... IF EXISTS guards make this script safe to re-run on existing databases.
 --
 
---
--- Constraints for table `assignment`
---
+-- assignment
+ALTER TABLE `assignment`
+  DROP FOREIGN KEY IF EXISTS `assignment_ibfk_1`;
 ALTER TABLE `assignment`
   ADD CONSTRAINT `assignment_ibfk_1` FOREIGN KEY (`REP_FAULT_ID`) REFERENCES `reported_fault` (`REP_FAULT_ID`);
 
---
--- Constraints for table `assignment_inventory`
---
+-- assignment_inventory
+ALTER TABLE `assignment_inventory`
+  DROP FOREIGN KEY IF EXISTS `assignment_inventory_ibfk_1`,
+  DROP FOREIGN KEY IF EXISTS `assignment_inventory_ibfk_2`;
 ALTER TABLE `assignment_inventory`
   ADD CONSTRAINT `assignment_inventory_ibfk_1` FOREIGN KEY (`ASSIGN_ID`) REFERENCES `assignment` (`ASSIGN_ID`),
   ADD CONSTRAINT `assignment_inventory_ibfk_2` FOREIGN KEY (`ITEM_ID`) REFERENCES `inventory_item` (`ITEM_ID`);
 
---
--- Constraints for table `assignment_technician`
---
+-- assignment_technician
+ALTER TABLE `assignment_technician`
+  DROP FOREIGN KEY IF EXISTS `assignment_technician_ibfk_1`,
+  DROP FOREIGN KEY IF EXISTS `assignment_technician_ibfk_2`;
 ALTER TABLE `assignment_technician`
   ADD CONSTRAINT `assignment_technician_ibfk_1` FOREIGN KEY (`ASSIGN_ID`) REFERENCES `assignment` (`ASSIGN_ID`),
   ADD CONSTRAINT `assignment_technician_ibfk_2` FOREIGN KEY (`EMP_ID`) REFERENCES `employee` (`EMP_ID`);
 
---
--- Constraints for table `client_product`
---
+-- client_product
+ALTER TABLE `client_product`
+  DROP FOREIGN KEY IF EXISTS `client_product_ibfk_1`,
+  DROP FOREIGN KEY IF EXISTS `client_product_ibfk_2`;
 ALTER TABLE `client_product`
   ADD CONSTRAINT `client_product_ibfk_1` FOREIGN KEY (`CLIENT_ID`) REFERENCES `client` (`CLIENT_ID`),
   ADD CONSTRAINT `client_product_ibfk_2` FOREIGN KEY (`PROD_ID`) REFERENCES `product` (`PROD_ID`);
 
---
--- Constraints for table `inventory_item`
---
+-- inventory_item
+ALTER TABLE `inventory_item`
+  DROP FOREIGN KEY IF EXISTS `inventory_item_ibfk_1`;
 ALTER TABLE `inventory_item`
   ADD CONSTRAINT `inventory_item_ibfk_1` FOREIGN KEY (`PROD_ID`) REFERENCES `product` (`PROD_ID`);
 
---
--- Constraints for table `inventory_transaction`
---
+-- inventory_transaction
+ALTER TABLE `inventory_transaction`
+  DROP FOREIGN KEY IF EXISTS `inventory_transaction_ibfk_1`,
+  DROP FOREIGN KEY IF EXISTS `inventory_transaction_ibfk_2`,
+  DROP FOREIGN KEY IF EXISTS `inventory_transaction_ibfk_3`;
 ALTER TABLE `inventory_transaction`
   ADD CONSTRAINT `inventory_transaction_ibfk_1` FOREIGN KEY (`ITEM_ID`) REFERENCES `inventory_item` (`ITEM_ID`),
   ADD CONSTRAINT `inventory_transaction_ibfk_2` FOREIGN KEY (`ASSIGN_ID`) REFERENCES `assignment` (`ASSIGN_ID`),
   ADD CONSTRAINT `inventory_transaction_ibfk_3` FOREIGN KEY (`EMP_ID`) REFERENCES `employee` (`EMP_ID`);
 
---
--- Constraints for table `invoice`
---
+-- invoice
+ALTER TABLE `invoice`
+  DROP FOREIGN KEY IF EXISTS `invoice_ibfk_1`,
+  DROP FOREIGN KEY IF EXISTS `invoice_ibfk_2`;
 ALTER TABLE `invoice`
   ADD CONSTRAINT `invoice_ibfk_1` FOREIGN KEY (`CLIENT_ID`) REFERENCES `client` (`CLIENT_ID`),
   ADD CONSTRAINT `invoice_ibfk_2` FOREIGN KEY (`ASSIGN_ID`) REFERENCES `assignment` (`ASSIGN_ID`);
 
---
--- Constraints for table `invoice_line`
---
+-- invoice_line
+ALTER TABLE `invoice_line`
+  DROP FOREIGN KEY IF EXISTS `invoice_line_ibfk_1`;
 ALTER TABLE `invoice_line`
   ADD CONSTRAINT `invoice_line_ibfk_1` FOREIGN KEY (`INVOICE_ID`) REFERENCES `invoice` (`INVOICE_ID`);
 
---
--- Constraints for table `payment`
---
+-- payment
+ALTER TABLE `payment`
+  DROP FOREIGN KEY IF EXISTS `payment_ibfk_1`;
 ALTER TABLE `payment`
   ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`INVOICE_ID`) REFERENCES `invoice` (`INVOICE_ID`);
 
---
--- Constraints for table `receipt`
---
+-- receipt
+ALTER TABLE `receipt`
+  DROP FOREIGN KEY IF EXISTS `receipt_ibfk_1`;
 ALTER TABLE `receipt`
   ADD CONSTRAINT `receipt_ibfk_1` FOREIGN KEY (`PAYMENT_ID`) REFERENCES `payment` (`PAYMENT_ID`);
 
---
--- Constraints for table `reported_fault`
---
+-- reported_fault
+ALTER TABLE `reported_fault`
+  DROP FOREIGN KEY IF EXISTS `reported_fault_ibfk_1`,
+  DROP FOREIGN KEY IF EXISTS `reported_fault_ibfk_2`,
+  DROP FOREIGN KEY IF EXISTS `reported_fault_ibfk_3`;
 ALTER TABLE `reported_fault`
   ADD CONSTRAINT `reported_fault_ibfk_1` FOREIGN KEY (`CLIENT_ID`) REFERENCES `client` (`CLIENT_ID`),
   ADD CONSTRAINT `reported_fault_ibfk_2` FOREIGN KEY (`CLIENT_PROD_ID`) REFERENCES `client_product` (`CLIENT_PROD_ID`),
   ADD CONSTRAINT `reported_fault_ibfk_3` FOREIGN KEY (`FAULT_ID`) REFERENCES `fault` (`FAULT_ID`);
 
---
--- Constraints for table `work_log`
---
+-- work_log
+ALTER TABLE `work_log`
+  DROP FOREIGN KEY IF EXISTS `work_log_ibfk_1`,
+  DROP FOREIGN KEY IF EXISTS `work_log_ibfk_2`;
 ALTER TABLE `work_log`
   ADD CONSTRAINT `work_log_ibfk_1` FOREIGN KEY (`ASSIGN_ID`) REFERENCES `assignment` (`ASSIGN_ID`),
   ADD CONSTRAINT `work_log_ibfk_2` FOREIGN KEY (`EMP_ID`) REFERENCES `employee` (`EMP_ID`);
