@@ -21,7 +21,7 @@
  */
 
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 
 // ============ SESSION MANAGEMENT ============
@@ -93,16 +93,16 @@ $stats = [
 ];
 
 if ($db_status === 'connected') {
-    $result = $conn->query("SELECT COUNT(*) as count FROM clients WHERE status='Active'");
+    $result = $conn->query("SELECT COUNT(*) as count FROM client");
     $stats['total_clients'] = $result->fetch_assoc()['count'] ?? 0;
     
-    $result = $conn->query("SELECT COUNT(*) as count FROM faults WHERE status IN ('Pending', 'Assigned', 'In Progress')");
+    $result = $conn->query("SELECT COUNT(*) as count FROM reported_fault WHERE STATUS IN ('Pending', 'Assigned', 'In Progress')");
     $stats['active_faults'] = $result->fetch_assoc()['count'] ?? 0;
     
-    $result = $conn->query("SELECT COUNT(*) as count FROM payments WHERE status = 'Pending'");
+    $result = $conn->query("SELECT COUNT(*) as count FROM invoice WHERE STATUS = 'Pending Payment'");
     $stats['pending_payments'] = $result->fetch_assoc()['count'] ?? 0;
     
-    $result = $conn->query("SELECT COUNT(*) as count FROM employee WHERE status='Active' AND role='Technician'");
+    $result = $conn->query("SELECT COUNT(*) as count FROM employee WHERE ROLE='Technician'");
     $stats['technicians_online'] = $result->fetch_assoc()['count'] ?? 0;
 }
 
@@ -1156,3 +1156,4 @@ $current_time = date('H:i:s');
     </script>
 </body>
 </html>
+
