@@ -39,7 +39,7 @@ if(isset($_POST['register'])){
         if(empty($errors)){
             $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-            $stmt = $conn->prepare("INSERT INTO CLIENT 
+            $stmt = $conn->prepare("INSERT INTO client 
             (COMPANY_NAME, COMPANY_PHONE, COMPANY_EMAIL, COMPANY_ADDRESS, CONTACT_PERSON_NAME, CLIENT_TYPE, USERNAME, PASSWORD_HASH) 
             VALUES (?,?,?,?,?,?,?,?)");
 
@@ -1263,5 +1263,6 @@ function changeLang(l){
 
 </body>    
 </html>
+
 
 
