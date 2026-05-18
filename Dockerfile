@@ -1,45 +1,26 @@
-FROM ubuntu:22.04
+FROM php:8.1-apache
 
-ENV DEBIAN_FRONTEND=noninteractive
-ENV APACHE_RUN_USER=www-data
-ENV APACHE_RUN_GROUP=www-data
-ENV APACHE_LOG_DIR=/var/log/apache2
-ENV APACHE_RUN_DIR=/var/run/apache2
-ENV APACHE_LOCK_DIR=/var/lock/apache2
-ENV APACHE_PID_FILE=/var/run/apache2/apache2.pid
-
+# Install MySQL client and PHP extensions
 RUN apt-get update && apt-get install -y \
-    apache2 \
-    php8.1 \
-    php8.1-mysql \
-    php8.1-gd \
-    php8.1-zip \
-    php8.1-mbstring \
-    php8.1-xml \
-    libapache2-mod-php8.1 \
     default-mysql-client \
-    unzip \
+    libpng-dev \
+    libjpeg-dev \
+    libzip-dev \
+    libxml2-dev \
+    && docker-php-ext-install mysqli pdo pdo_mysql gd zip mbstring xml \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN a2enmod rewrite php8.1
+# Enable Apache modules
+RUN a2enmod rewrite headers expires deflate
 
-RUN echo '<VirtualHost *:80>\n\
-    DocumentRoot /var/www/html\n\
-    <Directory /var/www/html>\n\
-        Options -Indexes +FollowSymLinks\n\
-        AllowOverride All\n\
-        Require all granted\n\
-    </Directory>\n\
-</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
-
-# FIX: Disable Apache's ServerName warning and ensure it runs in foreground
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
+# PHP config
 RUN echo "upload_max_filesize = 20M\npost_max_size = 20M\nmax_execution_time = 120\nmemory_limit = 256M\ndisplay_errors = Off\nlog_errors = On" \
-    > /etc/php/8.1/apache2/conf.d/99-custom.ini
+    > /usr/local/etc/php/conf.d/99-custom.ini
 
+# Copy app files
 COPY . /var/www/html/
 
+# Set permissions
 RUN mkdir -p /var/www/html/uploads/faults \
              /var/www/html/uploads/repair_documents \
              /var/www/html/logs \
@@ -48,15 +29,24 @@ RUN mkdir -p /var/www/html/uploads/faults \
     && chmod -R 755 /var/www/html \
     && chmod -R 775 /var/www/html/uploads /var/www/html/logs /var/www/html/backups
 
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+# Apache config - enable AllowOverride for .htaccess
+RUN echo '<VirtualHost *:80>\n\
+    DocumentRoot /var/www/html\n\
+    <Directory /var/www/html>\n\
+        Options -Indexes +FollowSymLinks\n\
+        AllowOverride All\n\
+        Require all granted\n\
+    </Directory>\n\
+    ErrorLog ${APACHE_LOG_DIR}/error.log\n\
+    CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
+</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
-# FIX: Ensure entrypoint has Unix line endings (LF not CRLF)
+# Copy and prepare entrypoint
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN sed -i 's/\r//' /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 80
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-
-# FIX: Use apache2ctl correctly — pass -D FOREGROUND so it doesn't daemonize
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["apache2-foreground"]
