@@ -25,12 +25,14 @@ ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 
 // ============ SESSION MANAGEMENT ============
-session_start([
-    'cookie_httponly' => true,
-    'cookie_secure' => isset($_SERVER['HTTPS']),
-    'cookie_samesite' => 'Strict',
-    'cookie_lifetime' => 3600,
-]);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start([
+        'cookie_httponly' => true,
+        'cookie_secure' => isset($_SERVER['HTTPS']),
+        'cookie_samesite' => 'Strict',
+        'cookie_lifetime' => 3600,
+    ]);
+}
 
 // ============ DATABASE CONNECTION ============
 require_once __DIR__ . '/config/database.php';
